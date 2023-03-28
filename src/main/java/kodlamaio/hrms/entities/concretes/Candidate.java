@@ -63,6 +63,11 @@ public class Candidate extends User {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public String getEmail() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	

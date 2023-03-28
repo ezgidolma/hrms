@@ -70,4 +70,9 @@ public class JobAd {
 	@JoinColumn(name="job_title_id")
 	private JobTitle jobTitle;
 
+	public void setIsActive(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

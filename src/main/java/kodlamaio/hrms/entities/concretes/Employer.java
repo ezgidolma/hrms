@@ -49,4 +49,9 @@ public class Employer {
 	
 	@OneToMany(mappedBy = "employer")
 	private List<JobAd> jobAds;
+
+	public Object getEmail() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

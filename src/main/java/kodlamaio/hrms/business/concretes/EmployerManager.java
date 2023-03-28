@@ -7,7 +7,12 @@ import org.springframework.stereotype.Service;
 
 import kodlamaio.hrms.business.abstracts.EmployerService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
+import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
+import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
+import kodlamaio.hrms.core.utilities.results.SuccessResult;
+import kodlamaio.hrms.core.verifications.abstracts.EmailVerificationService;
+import kodlamaio.hrms.core.verifications.abstracts.HrmsVerificationService;
 import kodlamaio.hrms.dataAccess.abstracts.EmployerDao;
 import kodlamaio.hrms.entities.concretes.Employer;
 
@@ -15,29 +20,44 @@ import kodlamaio.hrms.entities.concretes.Employer;
 public class EmployerManager implements EmployerService{
 
 	private EmployerDao employerDao;
+	private EmailVerificationService emailVerificationService;
+	private HrmsVerificationService hrmsVerificationService;
 	
 	@Autowired
-	public EmployerManager(EmployerDao employerDao) {
+	public EmployerManager(EmployerDao employerDao,EmailVerificationService emailVerificationService,
+			HrmsVerificationService hrmsVerificationService) {
 		super();
 		this.employerDao = employerDao;
+		this.emailVerificationService = emailVerificationService;
+		this.hrmsVerificationService = hrmsVerificationService;
 	}
 
 
 
 	@Override
 	public Result add(Employer employer) {
-		// TODO Auto-generated method stub
-		return null;
+		if(isEmailUsed(employer.getEmail()).isSucces()) {
+			this.employerDao.save(employer);
+			return new SuccessResult(this.emailVerificationService.verifyAccount(employer.getEmail()).getMessage() + this.hrmsVerificationService.verifyAccount().getMessage() + "İş veren başarıyla eklendi: " + employer.getCompanyName());
+		} else {
+			return new ErrorResult(isEmailUsed(employer.getEmail()).getMessage());
+		}
 	}
 
 
+	private Result isEmailUsed(Object email) {
+		if(this.employerDao.findByEmail(email) == null) {
+			return new SuccessResult("");
+		} else {
+			return new ErrorResult("Bu email ile daha önce kayıt yapılmış!");
+		}
+	}
 
 
 
 	@Override
 	public DataResult<List<Employer>> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return new SuccessDataResult<List<Employer>>(this.employerDao.findAll(), "Şirketler listelendi.");
 	}
 
 }
