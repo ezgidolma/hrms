@@ -1,4 +1,4 @@
-package kodlamaio.hrms.api.controllers;
+package kodlamaio.hrms.api.controller;
 
 import java.rmi.RemoteException;
 import java.util.List;

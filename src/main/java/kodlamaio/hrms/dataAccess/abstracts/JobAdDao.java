@@ -13,6 +13,8 @@ public interface JobAdDao extends JpaRepository<JobAd, Integer> {
 	List<JobAd> getByIsActiveTrue();
 	List<JobAd> getByEmployer_CompanyNameAndIsActiveTrue(String companyName);
 	
-	@Query("Select new kodlamaio.hrms.entities.dtos.JobAdWithCompanyDto(e.companyName, j.openPositionCount, j.releaseDate, j.applicationDeadline) From Employer e Inner Join e.jobAds j")
+	@Query("Select new kodlamaio.hrms.entities.dtos.JobAdWithCompanyDto"
+			+ "(e.companyName, j.openPositionCount, j.releaseDate, j.applicationDeadline)"
+			+ " From Employer e Inner Join e.jobAds j")
 	List<JobAdWithCompanyDto> getJobAdWithDetails();
 }

@@ -7,12 +7,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -26,32 +29,30 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
-@PrimaryKeyJoinColumn(name="employer_id", referencedColumnName = "id")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","jobAds"})
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","advertisements"})
 
 public class Employer {
 
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
+    private int id;
+	
 	@Column(name="company_name")
-	@NotBlank
-	@NotNull
-	private String companyName;
-
-	@Column(name="web_address")
-	@NotBlank
-	@NotNull
-	private String webAdress;
+    private String company_name;
 	
-	@Column(name="phone_number")
-	@NotBlank
-	@NotNull
-	private String phoneNumber;
+	@Column(name="website")
+    private String website;
 	
-	@OneToMany(mappedBy = "employer")
-	private List<JobAd> jobAds;
+	@Column(name="phone")
+    private String phone;
+	
+	@OneToOne()
+	@JoinColumn(name="user_id")
+	private User user;
 
-	public Object getEmail() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	@JsonIgnore
+	@OneToMany(mappedBy="employer")
+    private List<JobAdvertisement> advertisements;
 }

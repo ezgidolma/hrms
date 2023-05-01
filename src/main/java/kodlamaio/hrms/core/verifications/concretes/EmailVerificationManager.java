@@ -10,8 +10,8 @@ import kodlamaio.hrms.core.verifications.abstracts.EmailVerificationService;
 public class EmailVerificationManager implements EmailVerificationService {
 
 	@Override
-	public Result verifyAccount(String email) {
-		return new SuccessResult(email + " adresine doğrulama kodu gönderildi.");
+	public Result verifyAccount(Object object) {
+		return new SuccessResult(object + " adresine doğrulama kodu gönderildi.");
 	}
 
 }
