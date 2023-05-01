@@ -5,13 +5,15 @@ import org.springframework.stereotype.Service;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.core.verifications.abstracts.EmailVerificationService;
+import kodlamaio.hrms.core.verifications.abstracts.VerificationCodeService;
+import kodlamaio.hrms.entities.concretes.User;
 
 @Service
-public class EmailVerificationManager implements EmailVerificationService {
+public class VerificationCodeManager implements VerificationCodeService {
 
 	@Override
-	public Result verifyAccount(Object object) {
-		return new SuccessResult(object + " adresine doğrulama kodu gönderildi.");
+	public boolean sendEmail(User user) {
+		
+		return true;
 	}
-
 }
