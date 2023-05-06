@@ -40,5 +40,10 @@ public class Job {
 	   @JsonIgnore
 	   @OneToMany(mappedBy="job")
 	   private List<Experience> experiences;
+
+	public Object getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	      
 }

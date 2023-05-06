@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import kodlamaio.hrms.entities.concretes.JobSeeker;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,5 +45,11 @@ public class Experience {
         }
         return this.endYear.toString();
     }
+
+
+	public void setJobseeker(JobSeeker jobSeeker) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

@@ -6,58 +6,66 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kodlamaio.hrms.business.abstracts.EmployerService;
+import kodlamaio.hrms.core.utilities.Business.BusinessRules;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
-import kodlamaio.hrms.core.verifications.abstracts.EmailVerificationService;
-import kodlamaio.hrms.core.verifications.abstracts.HrmsVerificationService;
+import kodlamaio.hrms.core.verifications.abstracts.AdminCheckService;
+import kodlamaio.hrms.core.verifications.abstracts.VerificationCodeService;
 import kodlamaio.hrms.dataAccess.abstracts.EmployerDao;
 import kodlamaio.hrms.entities.concretes.Employer;
 
 @Service
 public class EmployerManager implements EmployerService{
-
 	private EmployerDao employerDao;
-	private EmailVerificationService emailVerificationService;
-	private HrmsVerificationService hrmsVerificationService;
-	
+	private VerificationCodeService verificationCodeService;
+	private AdminCheckService adminCheckService;
 	@Autowired
-	public EmployerManager(EmployerDao employerDao,EmailVerificationService emailVerificationService,
-			HrmsVerificationService hrmsVerificationService) {
+	public EmployerManager(EmployerDao employerDao, VerificationCodeService verificationCodeService,
+			AdminCheckService adminCheckService) {
 		super();
 		this.employerDao = employerDao;
-		this.emailVerificationService = emailVerificationService;
-		this.hrmsVerificationService = hrmsVerificationService;
+		this.verificationCodeService = verificationCodeService;
+		this.adminCheckService=adminCheckService;
 	}
 
-
-
-	@Override
-	public Result add(Employer employer) {
-		if(isEmailUsed(employer.getEmail()).isSucces()) {
-			this.employerDao.save(employer);
-			return new SuccessResult(this.emailVerificationService.verifyAccount(employer.getEmail()).getMessage() + this.hrmsVerificationService.verifyAccount().getMessage() + "İş veren başarıyla eklendi: " + employer.getCompanyName());
-		} else {
-			return new ErrorResult(isEmailUsed(employer.getEmail()).getMessage());
-		}
-	}
-
-
-	private Result isEmailUsed(Object email) {
-		if(this.employerDao.findByEmail(email) == null) {
-			return new SuccessResult("");
-		} else {
-			return new ErrorResult("Bu email ile daha önce kayıt yapılmış!");
-		}
-	}
-
-
+	
 
 	@Override
 	public DataResult<List<Employer>> getAll() {
-		return new SuccessDataResult<List<Employer>>(this.employerDao.findAll(), "Şirketler listelendi.");
+		
+		return new SuccessDataResult<List<Employer>>(employerDao.findAll(),"Employer Listed");
 	}
 
-}
+	@Override
+	public Result add(Employer employer) {
+		
+		Result result=BusinessRules.Run(
+				CheckIfNull(employer));
+		if(result!=null)
+		{
+			return result;
+		}
+		else if(!adminCheckService.isValid(employer))
+		{
+			return new ErrorResult("Employer is not validated by System Stuff.");
+		}
+		/*else if(!verificationCodeService.sendEmail(employer))
+		{
+			return new ErrorResult("Email is not verified yet.");
+		}*/
+		employerDao.save(employer);
+		return new SuccessResult("employer added");
+	}
+
+
+
+	private Result CheckIfNull(Employer employer) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	}
+

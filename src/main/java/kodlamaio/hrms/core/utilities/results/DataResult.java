@@ -1,5 +1,9 @@
 package kodlamaio.hrms.core.utilities.results;
 
+import java.util.List;
+
+import kodlamaio.hrms.entities.concretes.Image;
+
 public class DataResult<T> extends Result {
 
 	private T data;
@@ -14,11 +18,9 @@ public class DataResult<T> extends Result {
 		
 	}
 
+	
 
-	public T getData(T data) {
-		return this.data;
-		
-	}
+
 	
 
 }

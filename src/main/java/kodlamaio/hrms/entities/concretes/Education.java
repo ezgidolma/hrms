@@ -48,4 +48,9 @@ public class Education {
      @ManyToOne()
      @JoinColumn(name="jobseeker_id")
      JobSeeker jobseeker;
+
+	public void setJobseeker(JobSeeker jobSeeker2) {
+		// TODO Auto-generated method stub
+		
+	}
 }

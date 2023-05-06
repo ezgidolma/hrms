@@ -23,6 +23,7 @@ import kodlamaio.hrms.business.abstracts.EmployerService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.entities.concretes.Employer;
 import kodlamaio.hrms.core.utilities.results.ErrorDataResult;
+import kodlamaio.hrms.core.utilities.results.Result;
 
 @RestController
 @RequestMapping("/api/employers")
@@ -36,26 +37,14 @@ public class EmployersController {
 		this.employerService = employerService;
 	}
 	
+	
 	@GetMapping("/getall")
-	public DataResult<List<Employer>> getAll(){
-		return this.employerService.getAll();
-	}
-	
+	 public DataResult<List<Employer>> getAll(){
+		 return this.employerService.getAll();
+	 }
 	@PostMapping("/add")
-	public ResponseEntity<?> add(@Valid @RequestBody Employer employer) {
-		return ResponseEntity.ok(this.employerService.add(employer));
-	}
-	
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public ErrorDataResult<Object> handleValidationException(MethodArgumentNotValidException exceptions){
-		Map<String, String> validationErrors = new HashMap<String, String>();
-		for(FieldError fieldError : exceptions.getBindingResult().getFieldErrors()) {
-			validationErrors.put(fieldError.getField(), fieldError.getDefaultMessage());
-		}
-		
-		ErrorDataResult<Object> errors = new ErrorDataResult<Object>(validationErrors, "Doğrulama hataları");
-		return errors;
+	public Result add(@RequestBody Employer employer){
+		  return this.employerService.add(employer);
 	}
 	
 

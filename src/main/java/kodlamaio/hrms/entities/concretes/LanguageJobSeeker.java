@@ -41,4 +41,9 @@ public class LanguageJobSeeker {
 	@JoinColumn(name="language_id")
 	Language language;
 
+	public void setJobseeker(JobSeeker jobSeeker2) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

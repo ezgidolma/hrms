@@ -53,4 +53,9 @@ public class JobAdvertisement {
 	   @ManyToOne()
 	   @JoinColumn(name="employer_id")
 	   Employer employer;
+
+	public void set_active(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -36,4 +36,10 @@ public class SocialMediaAccount {
 	@ManyToOne()
 	@JoinColumn(name="jobseeker_id")
 	JobSeeker jobseeker;
+
+	public void setJobSeeker(JobSeeker jobSeeker2) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

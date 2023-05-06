@@ -38,4 +38,14 @@ public class Image {
 	 @JoinColumn(name="user_id")
 	 private User user;
 
+	public Object getPublic_id() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setUser(Object user2) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

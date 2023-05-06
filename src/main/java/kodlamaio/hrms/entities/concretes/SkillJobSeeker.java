@@ -37,4 +37,9 @@ public class SkillJobSeeker {
 	@ManyToOne()
 	@JoinColumn(name="skill_id")
 	Skill skill;
+
+	public void setJobseeker(JobSeeker jobSeeker2) {
+		// TODO Auto-generated method stub
+		
+	}
 }

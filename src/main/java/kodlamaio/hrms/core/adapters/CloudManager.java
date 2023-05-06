@@ -8,9 +8,11 @@ import java.util.Map;
 
 
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
+
 import org.springframework.web.multipart.MultipartFile;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.ErrorDataResult;
@@ -47,6 +49,7 @@ public DataResult<Map<String, String>> upload(MultipartFile multipartFile) {
 
 
 public DataResult<Map> delete(String id) throws IOException {
+
 	Map result=cloudinary.uploader().destroy(id, ObjectUtils.emptyMap());
     return new SuccessDataResult<>(result);
 }

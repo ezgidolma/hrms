@@ -9,5 +9,6 @@ import kodlamaio.hrms.core.utilities.results.DataResult;
 
 public interface CloudService {
 	DataResult<Map<String, String>> upload(MultipartFile multipartFile);
-    DataResult<Map> delete(String id) throws IOException;
+    @SuppressWarnings("rawtypes")
+	DataResult<Map> delete(Object public_id) throws IOException;
 }
